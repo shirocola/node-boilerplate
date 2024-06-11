@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgres://user:password@db:5432/dbname?sslmode=disable
+      - PGSSLMODE=disable
+      - DB_USERNAME=user
+      - DB_PASSWORD=password
+      - DB_NAME=dbname
+      - DB_HOST=db
+    depends_on:
+      - db
+    command: npm run dev
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dbname
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
