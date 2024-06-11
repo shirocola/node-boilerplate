@@ -154,6 +154,5 @@ This project uses Husky to run `lint:fix` before every commit and `npm run test`
    docker build -t node-boilerplate .
 
 2. Run the Docker container:
-  ```bash
-  docker run -p 3000:3000 node-boilerplate
-  ```
+   ```bash
+   docker run -p 3000:3000 node-boilerplate
