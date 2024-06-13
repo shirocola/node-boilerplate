@@ -4,16 +4,18 @@
   "description": "Node.js boilerplate with Express, TypeScript, and other tools",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "nyc node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsc",
+    "build": "babel src --out-dir dist --extensions \".ts\"",
     "lint": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "precommit": "npm run lint:fix",
-    "prepush": "npm run test"
+    "prepush": "npm run test",
+    "coverage": "npx nyc report --reporter=html",
+    "report": "xdg-open coverage/index.html"
   },
   "author": "",
   "license": "MIT",
@@ -30,6 +32,10 @@
     "zod": "^3.11.6"
   },
   "devDependencies": {
+    "@babel/cli": "^7.24.7",
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "@types/chai": "^4.3.0",
     "@types/cors": "^2.8.17",
     "@types/jest": "^29.5.12",
@@ -41,6 +47,8 @@
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
+    "babel-plugin-istanbul": "^6.1.1",
+    "c8": "^10.1.1",
     "chai": "^4.3.6",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
@@ -48,11 +56,12 @@
     "helmet": "^7.1.0",
     "jest": "^29.7.0",
     "mocha": "^10.0.0",
+    "nyc": "^17.0.0",
     "prettier": "^2.6.2",
     "sinon": "^15.0.0",
     "ts-jest": "^29.1.4",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^4.6.4"
+    "typescript": "^4.9.5"
   }
 }
