@@ -5,5 +5,6 @@ export const transactionId = (req: Request, res: Response, next: NextFunction) =
   const transactionId = uuidv4();
   req.headers['x-transaction-id'] = transactionId;
   res.setHeader('x-transaction-id', transactionId);
+  console.log(`Transaction ID: ${transactionId}`);
   next();
 };
