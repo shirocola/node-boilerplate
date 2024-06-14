@@ -4,7 +4,7 @@
   "description": "Node.js boilerplate with Express, TypeScript, and other tools",
   "main": "dist/index.js",
   "scripts": {
-    "start": "nyc node dist/index.js",
+    "start": "nyc ts-node src/index.ts",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "babel src --out-dir dist --extensions \".ts\"",
     "lint": "eslint 'src/**/*.ts'",
