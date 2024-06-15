@@ -1,24 +1,89 @@
 import { Request, Response } from 'express';
-import sinon from 'sinon';
 import { exampleController } from '../../src/controllers/exampleController';
-import { StubbedResponse } from '../../types/sinon-express';
+import { exampleSchema } from '../../src/schemas/exampleSchema';
 
 describe('Example Controller', () => {
-  let req: Partial<Request>;
-  let res: StubbedResponse;
+  it('should return a 200 response with a message', () => {
+    const req = {} as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
 
-  beforeEach(() => {
-    req = {};
-    res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.stub()
-    } as unknown as StubbedResponse;
+    exampleController.getExample(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({ message: 'This is an example route' });
   });
 
-  it('should return a 200 response with a message', () => {
-    exampleController.getExample(req as Request, res as unknown as Response);
+  it('should validate example data successfully', () => {
+    const req = {
+      body: { name: 'John Doe', age: 30 }
+    } as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
 
-    expect(res.status.calledWith(200)).toBe(true);
-    expect(res.json.calledWith({ message: 'This is an example route' })).toBe(true);
+    exampleController.validateExample(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({ message: 'Validation successful' });
+  });
+
+  it('should return a validation error for invalid data', () => {
+    const req = {
+      body: { name: 'John Doe', age: 17 }
+    } as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    exampleController.validateExample(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: expect.stringContaining('') });
+  });
+
+  it('should return an unknown error if the error is not an instance of Error', () => {
+    const req = {} as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    jest.spyOn(exampleSchema, 'parse').mockImplementation(() => {
+      throw 'string error';
+    });
+
+    exampleController.validateExample(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Unknown error' });
+
+    jest.restoreAllMocks();
+  });
+
+  it('should handle errors', () => {
+    const req = {} as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    const originalParse = exampleSchema.parse;
+
+    exampleSchema.parse = jest.fn(() => {
+      throw new Error('Forced error for testing');
+    });
+
+    exampleController.validateExample(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Forced error for testing' });
+
+    // Restore the original method after the test
+    exampleSchema.parse = originalParse;
   });
 });

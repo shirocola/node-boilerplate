@@ -1,14 +1,16 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "Running tests with coverage check..."
+echo "Running tests with coverage check..." >&2
 npm run test:coverage
 EXIT_CODE=$?
 
+echo "Test coverage script exited with code: $EXIT_CODE" >&2
+
 if [ $EXIT_CODE -ne 0 ]; then
-  echo "Coverage check failed. Push rejected."
+  echo "Coverage check failed. Push rejected." >&2
   exit 1
 fi
 
-echo "Coverage check passed. Proceeding with push."
+echo "Coverage check passed. Proceeding with push." >&2
 exit 0
