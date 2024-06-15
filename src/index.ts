@@ -2,10 +2,9 @@ import express from 'express';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import routes from './routes';
-import { initDb } from './database/config';
 import setupSwagger from './swagger';
 import { Server } from 'http';
-import sequelize from './database/config';
+import connectDb, { AppDataSource } from './database/config';
 import { transactionId } from './middlewares/transactionId';
 import gitCommitMiddleware from './middlewares/gitCommit';
 
@@ -21,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Initialize database and log configuration
-initDb().then(() => {
+connectDb().then(() => {
   console.log('Database initialized');
 
   // Routes
@@ -55,7 +54,7 @@ initDb().then(() => {
 
         // Close database connection
         try {
-          await sequelize.close();
+          await AppDataSource.destroy();
           console.log('Database connection closed');
           process.exit(0);
         } catch (error) {
