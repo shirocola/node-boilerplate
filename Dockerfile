@@ -10,7 +10,7 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Install ts-node for using TypeScript with Sequelize CLI
+# Install ts-node for using TypeScript with Typeorm CLI
 RUN npm install ts-node
 
 # Copy the rest of the application code
