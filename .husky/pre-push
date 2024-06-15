@@ -1,4 +1,14 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run test
+echo "Running tests with coverage check..."
+npm run test:coverage
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -ne 0 ]; then
+  echo "Coverage check failed. Push rejected."
+  exit 1
+fi
+
+echo "Coverage check passed. Proceeding with push."
+exit 0
