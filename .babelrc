@@ -3,6 +3,10 @@
       "@babel/preset-env",
       "@babel/preset-typescript"
     ],
-    "plugins": ["istanbul"]
+    "plugins": [
+      ["istanbul"],
+      ["@babel/plugin-proposal-decorators", { "legacy": true }],
+      ["@babel/plugin-proposal-class-properties", { "loose": true }]
+    ]
   }
   
