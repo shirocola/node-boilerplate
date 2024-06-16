@@ -2,7 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import routes from './routes';
-import setupSwagger from './swagger';
+import setupSwagger from './config/swagger';
 import { Server } from 'http';
 import { connectDb, AppDataSource } from './database/config';
 import { transactionId } from './middlewares/transactionId';
