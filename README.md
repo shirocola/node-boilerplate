@@ -13,33 +13,6 @@ Before you begin, make sure you have the following installed:
 - Terraform (optional)
 - k6 (optional)
 
-## Check List
-- [x] Typescript
-- [x] Expressjs
-- [x] [Helmet](https://github.com/helmetjs/helmet) nodejs package for security HTTP response headers
-- [x] Swagger Spec
-- [x] Parallel random-order testing using Chaijs, mocha, sinonjs
-- [x] Code coverage
-- [x] Eslint, Prettier
-- [x] Commit and push hooks
-- [x] Sequelize database setup with SSL in production
-- [x] Dockerfile
-- [x] Azure CI pipeline
-- [x] Health check route
-- [x] Return git commit id in HTTP response header
-- [x] logs with transaction id
-- [x] kubernetes deployment config files
-- [x] Validation of request body using [Zod](https://zod.dev/)
-- [x] Updated README file for the project
-- [x] Logs with transaction id
-- [x] CORS support for local development
-- [x] VsCode debugger configuration
-- [x] Integrate [Azure application insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/nodejs)
-- [x] [Gitops ready for AKS with ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
-- [x] Terraform for Infrastructure as Code (Azure, GCP, AWS)
-- [x] k6 for Load Testing
-
-
 ## Folder Structure
 
 node-boilerplate/  
