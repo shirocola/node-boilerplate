@@ -43,7 +43,19 @@ describe('Example Controller', () => {
     exampleController.validateExample(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ error: expect.stringContaining('') });
+    expect(res.json).toHaveBeenCalledWith({
+      errors: [
+        {
+          code: 'too_small',
+          minimum: 18,
+          type: 'number',
+          inclusive: true,
+          exact: false,
+          message: 'Number must be greater than or equal to 18',
+          path: ['age']
+        }
+      ]
+    });
   });
 
   it('should return an unknown error if the error is not an instance of Error', () => {
@@ -65,7 +77,7 @@ describe('Example Controller', () => {
     jest.restoreAllMocks();
   });
 
-  it('should handle errors', () => {
+  it('should handle forced errors', () => {
     const req = {} as Request;
     const res = {
       status: jest.fn().mockReturnThis(),
@@ -74,7 +86,7 @@ describe('Example Controller', () => {
 
     const originalParse = exampleSchema.parse;
 
-    exampleSchema.parse = jest.fn(() => {
+    jest.spyOn(exampleSchema, 'parse').mockImplementation(() => {
       throw new Error('Forced error for testing');
     });
 

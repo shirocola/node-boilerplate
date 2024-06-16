@@ -14,6 +14,8 @@ export const exampleController = {
     } catch (error) {
       if (error instanceof ZodError) {
         res.status(400).json({ errors: error.errors });
+      } else if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
       } else {
         res.status(400).json({ error: 'Unknown error' });
       }
