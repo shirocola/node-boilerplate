@@ -39,11 +39,6 @@ Before you begin, make sure you have the following installed:
 - [x] Terraform for Infrastructure as Code (Azure, GCP, AWS)
 - [x] k6 for Load Testing
 
-## Assign for intern
-- Testing
-  - what is Testing
-- dockerfile
-  - what is Dockerfile
 
 ## Folder Structure
 
@@ -134,6 +129,7 @@ You can access the example route at `http://localhost:3000/example` and the heal
 - `npm run test`: Run tests
 - `npm run test:coverage`: Run tests and generate a code coverage report
 - `npm run coverage`: Run nyc for manual testing coverage
+- `npm run report`: Open report
 
 ## Contributing
 
