@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { User } from '../../entity/User';
+import { User } from '../entity/User';
 
 export const seedUsers = async (dataSource: DataSource) => {
   const userRepository = dataSource.getRepository(User);
@@ -9,12 +9,18 @@ export const seedUsers = async (dataSource: DataSource) => {
       username: 'user1',
       email: 'user1@example.com',
       password: 'password1',
+      role: 'admin',
     },
     {
       username: 'user2',
       email: 'user2@example.com',
       password: 'password2',
     },
+    {
+      username: 'user3',
+      email: 'user3@example.com',
+      password: 'password3',
+    }
   ];
 
   await userRepository.clear(); // Clear existing data and reset ID sequence
