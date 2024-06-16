@@ -1,6 +1,11 @@
+import { exampleSchema } from '../schemas/exampleSchema';
+
 export const exampleService = {
-    getMessage: () => {
-      return 'This is an example service message';
-    }
-  };
-  
+  getExampleMessage: () => {
+    return 'This is an example route';
+  },
+
+  validateExample: (data: unknown) => {
+    exampleSchema.parse(data);
+  }
+};
