@@ -4,9 +4,10 @@ import dotenv from 'dotenv';
 import routes from './routes';
 import setupSwagger from './swagger';
 import { Server } from 'http';
-import connectDb, { AppDataSource } from './database/config';
+import { connectDb, AppDataSource } from './database/config';
 import { transactionId } from './middlewares/transactionId';
 import gitCommitMiddleware from './middlewares/gitCommit';
+import logger from './utils/logger';
 
 dotenv.config();
 
@@ -21,14 +22,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Initialize database and log configuration
 connectDb().then(() => {
-  console.log('Database initialized');
+  logger.info('Database initialized');
 
   // Routes
   app.use('/api', routes);
 
   // Health check route
   app.get('/health', (req, res) => {
-    console.log('Health check route hit');
+    logger.info('Health check route hit');
     res.status(200).json({ status: 'UP' });
   });
 
@@ -38,27 +39,27 @@ connectDb().then(() => {
 
   if (process.env.NODE_ENV !== 'test') {
     server = app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
+      logger.info(`Server is running on port ${port}`);
     });
   }
 
   // Graceful shutdown
   const shutdown = async () => {
-    console.log('Received shutdown signal, shutting down gracefully...');
+    logger.info('Received shutdown signal, shutting down gracefully...');
     if (server) {
       server.close(async (err?: Error) => {
         if (err) {
-          console.error('Error closing the server:', err);
+          logger.error('Error closing the server:', err);
           process.exit(1);
         }
 
         // Close database connection
         try {
           await AppDataSource.destroy();
-          console.log('Database connection closed');
+          logger.info('Database connection closed');
           process.exit(0);
         } catch (error) {
-          console.error('Error closing the database connection:', error);
+          logger.error('Error closing the database connection:', error);
           process.exit(1);
         }
       });

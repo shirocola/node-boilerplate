@@ -1,8 +1,16 @@
-import cors from 'cors';
+import cors, { CorsOptions, CorsOptionsDelegate } from 'cors';
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200
+const allowedOrigins = ['http://localhost:3000'];
+
+const corsOptionsDelegate: CorsOptionsDelegate = (req, callback) => {
+  let corsOptions: CorsOptions;
+  const origin = req.headers.origin || '';
+  if (allowedOrigins.includes(origin)) {
+    corsOptions = { origin: true };
+  } else {
+    corsOptions = { origin: false };
+  }
+  callback(null, corsOptions);
 };
 
-export default cors(corsOptions);
+export default cors(corsOptionsDelegate);

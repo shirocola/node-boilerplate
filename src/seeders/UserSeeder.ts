@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { User } from '../entity/User';
+import logger from '../utils/logger';
 
 export const seedUsers = async (dataSource: DataSource) => {
   const userRepository = dataSource.getRepository(User);
@@ -31,5 +32,5 @@ export const seedUsers = async (dataSource: DataSource) => {
     await userRepository.save(newUser);
   }
 
-  console.log('Seeded users');
+  logger.info('Seeded users');
 };

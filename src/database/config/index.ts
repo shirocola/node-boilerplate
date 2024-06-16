@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { User } from '../../entity/User';
 import dotenv from 'dotenv';
+import logger from '../../utils/logger';
 
 dotenv.config();
 
@@ -12,19 +13,19 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  synchronize: true,
+  synchronize: true, // Change to false in production
   logging: false,
   entities: [User],
   migrations: ['src/migration/**/*.ts'],
   subscribers: ['src/subscriber/**/*.ts'],
 });
 
-const connectDb = async () => {
+export const connectDb = async () => {
   try {
     await AppDataSource.initialize();
-    console.log('Database connection established');
+    logger.info('Database connection established');
   } catch (error) {
-    console.error('Database connection error:', error);
+    logger.error('Database connection error:', error);
   }
 };
 

@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { AppDataSource } from './database/config';
 import { seedUsers } from './seeders/UserSeeder';
+import logger from './utils/logger';
 
 const seed = async () => {
   await AppDataSource.initialize();
@@ -8,8 +9,8 @@ const seed = async () => {
   // Call individual seeders
   await seedUsers(AppDataSource);
 
-  console.log('Seeding completed');
+  logger.info('Seeding completed');
   await AppDataSource.destroy();
 };
 
-seed().catch((error) => console.error('Error seeding data:', error));
+seed().catch((error) => logger.error('Error seeding data:', error));
