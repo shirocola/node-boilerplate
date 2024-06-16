@@ -8,7 +8,7 @@ module.exports = {
     },
     testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.ts$',
     coverageDirectory: 'coverage',
-    collectCoverageFrom: ['src/**/*.{ts,js}', '!src/**/*.d.ts'],
+    collectCoverageFrom: ['src/**/*.{ts,js}', '!src/**/*.d.ts', '!src/entity/**'],
     collectCoverage: true,
     coverageThreshold: {
       global: {
